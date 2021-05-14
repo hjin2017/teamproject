@@ -24,12 +24,14 @@ public class MainController {
 	
 	//이현용 end
 	//허진호
+	//ajax 컨트롤러 예제//////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/menu",method = RequestMethod.POST,produces ={"applcation/json;charset=utf-8" })
 	@ResponseBody
 	public String tmain(int s) {
 		System.out.println(s);
 	   return "{\"process\":\"정상적으로 저장되었습니다.\"}"; 
 	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//작업 공간
 	
 	//허진호 end

@@ -11,28 +11,27 @@
 $(document).ready(function(){
 	//공통 함수 모임
 function ajaxfunction(data,url,fun) {
-		var test =	{
-				url:'',
-				type: 'post' , 
-				dataType: 'json' ,
-				data:'',
-				success: function(e){fun(e);},
-				error:function(request,status,error){
-					 console.log("code:"+request.status+"\n"+"error:"+error);
-				}
-		}
-				
-		test.url = url;
-		test.data = data;	
-		$.ajax(test);
+	var test =	{
+			url:'',
+			type: 'post' , 
+			dataType: 'json' ,
+			data:'',
+			success: function(e){fun(e);},
+			error:function(request,status,error){
+				 console.log("code:"+request.status+"\n"+"error:"+error);
+			}
 	}
-    //사용 방법//////////////////
-	function s(e){
-		alert(e.process);
-	}
+			
+	test.url = url;
+	test.data = data;	
+	$.ajax(test);
+}
+	
+    //ajax 스크립트 예제//////////////////////////////////////////////////////////////////
+	function s(e){alert(e.process);}
 	var data = {'s':10};
 	ajaxfunction(data,'/menu',s);
-	//////////////////////
+	//////////////////////////////////////////////////////////////////////////////////
 });
 </script>
 <style type="text/css">

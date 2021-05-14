@@ -8,13 +8,13 @@
 <title>Insert title here</title>
 <script>
 $(document).ready(function(){
-	alert("김세미")
 });
 </script>
 </head>
 <body>
 <div id="김세미" style="background-color:red;">
 김세미 작업공간
+dsklfjdljf;
 </div>
 </body>
 </html>

@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <script>
 $(document).ready(function(){
-	alert("메뉴")
 });
 </script>
 <style type="text/css">

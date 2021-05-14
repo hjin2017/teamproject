@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src ="/resources/jquery-3.2.1.min.js"></script>
 <script>
 $(document).ready(function(){
 	

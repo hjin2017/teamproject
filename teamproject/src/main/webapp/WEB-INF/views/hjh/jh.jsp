@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <script>
 $(document).ready(function(){
-	alert("허진호")
 });
 </script>
 

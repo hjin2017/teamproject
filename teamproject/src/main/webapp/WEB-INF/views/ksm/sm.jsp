@@ -139,7 +139,7 @@
 
             //! [Define frames processing]
             var isRunning = false;
-            const FPS = 30;  // Target number of frames processed per second.
+            const FPS = 120;  // Target number of frames processed per second.
             function captureFrame() {
                 var begin = Date.now();
                 cap.read(frame);  // Read a frame from camera

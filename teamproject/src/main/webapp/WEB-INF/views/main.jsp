@@ -9,30 +9,29 @@
 <script src ="jquery-3.2.1.min.js"></script>
 <script>
 $(document).ready(function(){
-	//공통 함수 모임
-function ajaxfunction(data,url,fun) {
-	var test =	{
-			url:'',
-			type: 'post' , 
-			dataType: 'json' ,
-			data:'',
-			success: function(e){fun(e);},
-			error:function(request,status,error){
-				 console.log("code:"+request.status+"\n"+"error:"+error);
-			}
-	}
-			
-	test.url = url;
-	test.data = data;	
-	$.ajax(test);
-}
-	
-    //ajax 스크립트 예제//////////////////////////////////////////////////////////////////
-	function s(e){alert(e.process);}
-	var data = {'s':10};
-	ajaxfunction(data,'/menu',s);
-	//////////////////////////////////////////////////////////////////////////////////
 });
+//공통 함수 모임
+function ajaxfunction(data,url,fun) {
+var test =	{
+		url:'',
+		type: 'post' , 
+		dataType: 'json' ,
+		data:'',
+		success: function(e){fun(e);},
+		error:function(request,status,error){
+			 console.log("code:"+request.status+"\n"+"error:"+error);
+		}
+}
+		
+test.url = url;
+test.data = data;	
+$.ajax(test);
+}
+//ajax 스크립트 예제//////////////////////////////////////////////////////////////////
+function s(e){alert(e.process);}
+var data = {'s':10};
+ajaxfunction(data,'/menu',s);
+//////////////////////////////////////////////////////////////////////////////////
 </script>
 <style type="text/css">
 /*창 분할 */
@@ -70,7 +69,7 @@ left:0;top:0;
 	 		<%@include file="lhy/hy.jsp" %>
 	 	</div>
 	 	<div id="main_body_block" style="background-color: purple;"> 
-	 		<%@include file="hjh/jh.jsp" %>
+	 		<%@include file="hjh/hjh_main.jsp" %>
 	 	</div>
 	 </article>
 	 <footer>

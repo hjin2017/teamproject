@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="spring_mybatis.EmpDAO">
+<mapper namespace="com.teamproject.RestaurantDAO">
 <!-- 김세미 -->  
 
 <!-- 김세미 end-->  
@@ -10,7 +10,9 @@
 
 <!-- 이현용 end-->  
 <!-- 허진호 -->  
-
+<select id="getAllRestautant" resultType="RestaurantVO">
+select * from Restaurant
+</select>
 <!-- 허진호 end-->  
 </mapper>
 

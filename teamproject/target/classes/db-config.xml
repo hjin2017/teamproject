@@ -9,7 +9,7 @@
 	별명 : emp 
 	-->
 	<typeAliases>
-		<typeAlias type="spring_mybatis.EmpVO" alias="empVO"/>
+		<typeAlias type="com.teamproject.RestaurantVO" alias="RestaurantVO"/>
 	</typeAliases> 
 	
 	<!-- 3. sql mapping 파일 설정 -->

@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <script>
 $(document).ready(function(){
-	alert("메뉴")
 });
 </script>
 <style type="text/css">
@@ -35,7 +34,7 @@ color:black;
             <li ><a class="menuLink" href="#home">HOME</a></li>
             <li><a class="menuLink" href="#김세미">김세미</a></li>
             <li><a class="menuLink" href="#이현용">이현용</a></li>
-            <li><a class="menuLink" href="#허진호">허진호</a></li>
+            <li><a class="menuLink" href="#hjh_main">허진호</a></li>
             <li><a class="menuLink" href="#">xxxx</a></li>
           </ul>
         </nav>

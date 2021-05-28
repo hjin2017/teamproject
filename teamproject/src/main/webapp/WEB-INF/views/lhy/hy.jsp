@@ -8,12 +8,11 @@
 <title>Insert title here</title>
 <script>
 $(document).ready(function(){
-	alert("이현용")
 });
 </script>
 </head>
 <body>
-<div id="이현용" style="background-color: green;">
+<div id="hy_xxx" style="background-color: green;">
 이현용 작업공간
 </div>
 </body>

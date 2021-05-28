@@ -12,7 +12,7 @@
         var netDet = undefined, netRecogn = undefined;
         var persons = {};
 
-        //! [Run face detection model]
+        //얼굴 감지
         function detectFaces(img) {
             var blob = cv.blobFromImage(img, 1, { width: 192, height: 144 }, [104, 117, 123, 0], false, false);
             netDet.setInput(blob);
@@ -37,8 +37,7 @@
             blob.delete();
             out.delete();
             return faces;
-        };
-        //! [Run face detection model]
+        };//! [Run face detection model]
 
         //! [Get 128 floating points feature vector]
         function face2vec(face) {
@@ -47,8 +46,7 @@
             var vec = netRecogn.forward();
             blob.delete();
             return vec;
-        };
-        //! [Get 128 floating points feature vector]
+        };//! [Get 128 floating points feature vector]
 
         //! [Recognize]
         function recognize(face) {
@@ -66,13 +64,15 @@
             }
             vec.delete();
             return bestMatchName;
-        };
-        //! [Recognize]
+        };//! [Recognize]
 
+        //모델 로딩
         function loadModels(callback) {
             var utils = new Utils('');
             var proto = 'https://raw.githubusercontent.com/opencv/opencv/master/samples/dnn/face_detector/deploy_lowres.prototxt';
+            //detection - 사람이면 모두 인식
             var weights = 'https://raw.githubusercontent.com/opencv/opencv_3rdparty/dnn_samples_face_detector_20180205_fp16/res10_300x300_ssd_iter_140000_fp16.caffemodel';
+            //recognition - 사람 구별
             var recognModel = 'https://raw.githubusercontent.com/pyannote/pyannote-data/master/openface.nn4.small2.v1.t7';
             utils.createFileFromUrl('face_detector.prototxt', proto, () => {
                 document.getElementById('status').innerHTML = 'Downloading face_detector.caffemodel';
@@ -90,12 +90,13 @@
 
         function main() {
             // Create a camera object.
+            //여기서 비디오 처음부터 보일 수 있도록 설정 변경할 곳
             var output = document.getElementById('output');
             var camera = document.createElement("video");
             camera.setAttribute("width", output.width);
             camera.setAttribute("height", output.height);
 
-            // Get a permission from user to use a camera.
+            // 카메라 사용 허가
             navigator.mediaDevices.getUserMedia({ video: true, audio: false })
                 .then(function (stream) {
                     camera.srcObject = stream;
@@ -110,24 +111,33 @@
             var frameBGR = new cv.Mat(camera.height, camera.width, cv.CV_8UC3);
             //! [Open a camera stream]
 
-            //! [Add a person]
+            //사람 추가 버튼 클릭했을 때 이름+사진 가져와서 그려줌
             document.getElementById('addPersonButton').onclick = function () {
                 var rects = detectFaces(frameBGR);
+                
                 if (rects.length > 0) {
-                    var face = frameBGR.roi(rects[0]);
+                   	var face = frameBGR.roi(rects[0]);
 
-                    var name = prompt('Say your name:');
-                    var cell = document.getElementById("targetNames").insertCell(0);
+                    var name = prompt('Say your name:'); 
+                    var cell = document.getElementById("targetNames").insertCell(0); //table에 저장
                     cell.innerHTML = name;
 
-                    persons[name] = face2vec(face).clone();
-
-                    var canvas = document.createElement("canvas");
+                    persons[name] = face2vec(face).clone(); //객체 복사
+                    
+  			        var canvas = document.createElement("canvas");
                     canvas.setAttribute("width", 96);
                     canvas.setAttribute("height", 96);
-                    var cell = document.getElementById("targetImgs").insertCell(0);
+                    var cell = document.getElementById("targetImgs").insertCell(0); //table에 저장
                     cell.appendChild(canvas);
-
+                    
+                    //
+                    /* for(var i=0; i<10; i++){
+               			var saveface = frameBGR.roi(rects[i]);
+                    } */
+                    //console.log(typeof(document.getElementById("targetNames"))); //obj
+                    
+                    //
+                    
                     var faceResized = new cv.Mat(canvas.height, canvas.width, cv.CV_8UC3);
                     cv.resize(face, faceResized, { width: canvas.width, height: canvas.height });
                     cv.cvtColor(faceResized, faceResized, cv.COLOR_BGR2RGB);
@@ -139,31 +149,62 @@
 
             //! [Define frames processing]
             var isRunning = false;
-            const FPS = 120;  // Target number of frames processed per second.
+            const FPS = 30;  //초당 처리되는 프레임 수
             function captureFrame() {
                 var begin = Date.now();
-                cap.read(frame);  // Read a frame from camera
+                cap.read(frame);  // 프레임 읽기
                 cv.cvtColor(frame, frameBGR, cv.COLOR_RGBA2BGR);
-
+		
+                //이미지에서 얼굴을 찾아내는 함수
                 var faces = detectFaces(frameBGR);
                 faces.forEach(function (rect) {
                     cv.rectangle(frame, { x: rect.x, y: rect.y }, { x: rect.x + rect.width, y: rect.y + rect.height }, [0, 255, 0, 255]);
 
-                    var face = frameBGR.roi(rect);
-                    var name = recognize(face);
-                    cv.putText(frame, name, { x: rect.x, y: rect.y }, cv.FONT_HERSHEY_SIMPLEX, 1.0, [0, 255, 0, 255]);
+                    var face = frameBGR.roi(rect); //관심영역(얼굴)
+                    var name = recognize(face); //같은 사람인지 확인
+                    cv.putText(frame, name, { x: rect.x, y: rect.y }, cv.FONT_HERSHEY_SIMPLEX, 1.0, [0, 255, 0, 255]);  //같은 사람이면 글씨 쓰기
+                    if(name != "unknown"){//unknown이 아니고 &
+                    	//for(var i=0; i<10; i++){
+                    		//console.log("nametype"+ typeof(name));
+                    		//console.log(typeof((document.getElementById("targetNames")).toString()));
+                    		var getName = document.getElementById("targetNames"); //
+                    		var test = document.getElementsByTagName("td"); 
+                    		for(var i =0; i<3; i++){
+                    			console.log(test[i]);
+                    		}
+                    		console.log(test); //HTMLCollection
+                    		console.log(typeof(getName));//object
+                    		console.log("tostring " +getName.toString());	//[object HTMLTableRowElement]
+                    		console.log("json "+ JSON.stringify(getName));
+                    		//getName.value
+                    		//console.log(getName);
+                    		//console.log (name == getName);
+                    		/* if(name == document.getElementById("targetNames")){
+                        		alert(name + "님 출석 완료되었습니다.\n") //출석 완료 글자 출력 
+                        	}//이름을 찾았을때 */
+                    	//}
+                    	
+                    	
+                    	alert(name + "님 출석 완료되었습니다.\n") //출석 완료 글자 출력 
+               			isRunning = false;	//계속 alert창 나오니까 임시수정
+                    	//-> 데이터 베이스 출석 상태 update해야됨
+                    	
+                     }
+                    //db생성후에 for(var i=0; i<person[]; i++) if(name == person[name]){alert}  
+               
                 });
 
                 cv.imshow(output, frame);
 
-                // Loop this function.
+                // 반복
                 if (isRunning) {
                     var delay = 1000 / FPS - (Date.now() - begin);
                     setTimeout(captureFrame, delay);
                 }
             };
             //! [Define frames processing]
-
+			
+            //start/stop버튼 클릭시
             document.getElementById('startStopButton').onclick = function toggle() {
                 if (isRunning) {
                     isRunning = false;
@@ -197,11 +238,12 @@
     <div id="status"></div>
     <canvas id="output" width=640 height=480 style="max-width: 100%"></canvas>
 
-    <table>
+    <table> <!--테이블 고대로 db에 저장 -->
         <tr id="targetImgs"></tr>
         <tr id="targetNames"></tr>
     </table>
     <button id="addPersonButton" type="button" disabled="true">Add a person</button>
+    
 </body>
 
 </html>

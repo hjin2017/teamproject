@@ -4,17 +4,26 @@ import org.springframework.stereotype.Component;
 
 @Component("vo")
 public class RestaurantVO {
-	String RestaurantName,IndustryMenuInformation,StreetNameAddress,Address,RepresentativeMenu,
+	String restaurantName,IndustryMenuInformation,StreetNameAddress,Address,RepresentativeMenu,
 	takeout,reservation,prepayment,Wi_Fi,facilities_disabled,Parking,
 	RestaurantID,RestaurantPhone,RestaurantArea,RestaurantLatitude,RestaurantHardness,AcceptanceAttitude,
 	Naverpopularity,SeatsStanding,SeatsSeat,holiday;
+	double distance;
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 
 	public String getRestaurantName() {
-		return RestaurantName;
+		return restaurantName;
 	}
 
 	public void setRestaurantName(String restaurantName) {
-		RestaurantName = restaurantName;
+		this.restaurantName = restaurantName;
 	}
 
 	public String getIndustryMenuInformation() {
@@ -178,34 +187,6 @@ public class RestaurantVO {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((AcceptanceAttitude == null) ? 0 : AcceptanceAttitude.hashCode());
-		result = prime * result + ((Address == null) ? 0 : Address.hashCode());
-		result = prime * result + ((IndustryMenuInformation == null) ? 0 : IndustryMenuInformation.hashCode());
-		result = prime * result + ((Naverpopularity == null) ? 0 : Naverpopularity.hashCode());
-		result = prime * result + ((Parking == null) ? 0 : Parking.hashCode());
-		result = prime * result + ((RepresentativeMenu == null) ? 0 : RepresentativeMenu.hashCode());
-		result = prime * result + ((RestaurantArea == null) ? 0 : RestaurantArea.hashCode());
-		result = prime * result + ((RestaurantHardness == null) ? 0 : RestaurantHardness.hashCode());
-		result = prime * result + ((RestaurantID == null) ? 0 : RestaurantID.hashCode());
-		result = prime * result + ((RestaurantLatitude == null) ? 0 : RestaurantLatitude.hashCode());
-		result = prime * result + ((RestaurantName == null) ? 0 : RestaurantName.hashCode());
-		result = prime * result + ((RestaurantPhone == null) ? 0 : RestaurantPhone.hashCode());
-		result = prime * result + ((SeatsSeat == null) ? 0 : SeatsSeat.hashCode());
-		result = prime * result + ((SeatsStanding == null) ? 0 : SeatsStanding.hashCode());
-		result = prime * result + ((StreetNameAddress == null) ? 0 : StreetNameAddress.hashCode());
-		result = prime * result + ((Wi_Fi == null) ? 0 : Wi_Fi.hashCode());
-		result = prime * result + ((facilities_disabled == null) ? 0 : facilities_disabled.hashCode());
-		result = prime * result + ((holiday == null) ? 0 : holiday.hashCode());
-		result = prime * result + ((prepayment == null) ? 0 : prepayment.hashCode());
-		result = prime * result + ((reservation == null) ? 0 : reservation.hashCode());
-		result = prime * result + ((takeout == null) ? 0 : takeout.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -264,10 +245,10 @@ public class RestaurantVO {
 				return false;
 		} else if (!RestaurantLatitude.equals(other.RestaurantLatitude))
 			return false;
-		if (RestaurantName == null) {
-			if (other.RestaurantName != null)
+		if (restaurantName == null) {
+			if (other.restaurantName != null)
 				return false;
-		} else if (!RestaurantName.equals(other.RestaurantName))
+		} else if (!restaurantName.equals(other.restaurantName))
 			return false;
 		if (RestaurantPhone == null) {
 			if (other.RestaurantPhone != null)
@@ -322,9 +303,11 @@ public class RestaurantVO {
 		return true;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "RestaurantVO [RestaurantName=" + RestaurantName + ", IndustryMenuInformation=" + IndustryMenuInformation
+		return "RestaurantVO [RestaurantName=" + restaurantName + ", IndustryMenuInformation=" + IndustryMenuInformation
 				+ ", StreetNameAddress=" + StreetNameAddress + ", Address=" + Address + ", RepresentativeMenu="
 				+ RepresentativeMenu + ", takeout=" + takeout + ", reservation=" + reservation + ", prepayment="
 				+ prepayment + ", Wi_Fi=" + Wi_Fi + ", facilities_disabled=" + facilities_disabled + ", Parking="
@@ -332,16 +315,17 @@ public class RestaurantVO {
 				+ ", RestaurantArea=" + RestaurantArea + ", RestaurantLatitude=" + RestaurantLatitude
 				+ ", RestaurantHardness=" + RestaurantHardness + ", AcceptanceAttitude=" + AcceptanceAttitude
 				+ ", Naverpopularity=" + Naverpopularity + ", SeatsStanding=" + SeatsStanding + ", SeatsSeat="
-				+ SeatsSeat + ", holiday=" + holiday + "]";
+				+ SeatsSeat + ", holiday=" + holiday + ", distance=" + distance + "]";
 	}
+
 
 	public RestaurantVO(String restaurantName, String industryMenuInformation, String streetNameAddress, String address,
 			String representativeMenu, String takeout, String reservation, String prepayment, String wi_Fi,
 			String facilities_disabled, String parking, String restaurantID, String restaurantPhone,
 			String restaurantArea, String restaurantLatitude, String restaurantHardness, String acceptanceAttitude,
-			String naverpopularity, String seatsStanding, String seatsSeat, String holiday) {
+			String naverpopularity, String seatsStanding, String seatsSeat, String holiday, double distance) {
 		super();
-		RestaurantName = restaurantName;
+		this.restaurantName = restaurantName;
 		IndustryMenuInformation = industryMenuInformation;
 		StreetNameAddress = streetNameAddress;
 		Address = address;
@@ -362,7 +346,9 @@ public class RestaurantVO {
 		SeatsStanding = seatsStanding;
 		SeatsSeat = seatsSeat;
 		this.holiday = holiday;
+		this.distance = distance;
 	}
+
 	public RestaurantVO() {}
 	
 }

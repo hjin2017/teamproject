@@ -13,6 +13,42 @@
 <select id="getAllRestautant" resultType="RestaurantVO">
 select * from Restaurant
 </select>
+<select id="getdistance" resultType="RestaurantVO" parameterType="int[]">
+select RestaurantID,RestaurantName,IndustryMenuInformation,Takeout,
+Reservation,Prepayment,RestaurantPhone,StreetNameAddress,Address,
+holiday,RestaurantArea,RestaurantLatitude,RestaurantHardness,RepresentativeMenu,Naverpopularity,AcceptanceAttitude,SeatsStanding,
+SeatsSeat,Wi_Fi,Facilities_disabled,Parking,
+distance,r 
+from
+(
+	SELECT RestaurantID,RestaurantName,IndustryMenuInformation,Takeout,
+	Reservation,Prepayment,RestaurantPhone,StreetNameAddress,Address,
+	holiday,RestaurantArea,RestaurantLatitude,RestaurantHardness,RepresentativeMenu,Naverpopularity,AcceptanceAttitude,SeatsStanding,
+	SeatsSeat,Wi_Fi,Facilities_disabled,Parking,
+	distance,rownum r
+	from
+	(
+	 SELECT RestaurantID,RestaurantName,IndustryMenuInformation,Takeout,
+	 Reservation,Prepayment,RestaurantPhone,StreetNameAddress,Address,
+	  holiday,RestaurantArea,RestaurantLatitude,RestaurantHardness,RepresentativeMenu,Naverpopularity,AcceptanceAttitude,SeatsStanding,
+	SeatsSeat,Wi_Fi,Facilities_disabled,Parking,   
+	           ACOS(ROUND(
+	           COS(ACOS(-1)/180*(90- TO_NUMBER(RestaurantLatitude)))    
+	           *COS(ACOS(-1)/180*(90-34.3175146))
+	           +SIN(ACOS(-1)/180*(90- TO_NUMBER(RestaurantLatitude)))
+	           *SIN(ACOS(-1)/180 *(90-34.3175146))*COS(ACOS(-1)/180
+	           *(TO_NUMBER(RestaurantHardness)-126.7507345)), 20))
+	           * 6371000 as distance 
+	from (SELECT * from Restaurant)
+	ORDER BY distance
+	)
+)
+where r between 
+<foreach collection="array" item="num" separator="and">
+#{num}
+</foreach>
+</select>
+
 <!-- 허진호 end-->  
 </mapper>
 

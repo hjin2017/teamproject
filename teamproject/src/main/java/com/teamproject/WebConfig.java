@@ -10,8 +10,8 @@ public class WebConfig implements WebMvcConfigurer{
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/face/**")
-		.addResourceLocations("file:///C:/Users/user/Desktop/face/");
+		registry.addResourceHandler("/img/**")
+		.addResourceLocations("file:///D:/kdigital/workspace_spring/teamproject/teamproject/img/");
 	}
 }
 

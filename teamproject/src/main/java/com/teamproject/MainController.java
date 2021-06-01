@@ -2,6 +2,8 @@ package com.teamproject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,14 @@ public class MainController {
 	
 	@RequestMapping("/ocrinput")
 	public ModelAndView ocrinput() {
-		File f = new File("C:/Users/Maple/Desktop/images"); 
+		File f = new File("../img"); 
+		/*
+		 * 
+		 * File file = new File("../"); String[] files = file.list();
+		 * 
+		 * System.out.println("Listing contents of " + file.getPath()); for(int i=0 ; i
+		 * < files.length ; i++) { System.out.println(files[i]); }
+		 */
 		String[] filelist = f.list();
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("filelist",filelist);
@@ -53,7 +62,7 @@ public class MainController {
 	@ResponseBody
 	public String uploadresult(MultipartFile file) throws IOException{
 		String filename = file.getOriginalFilename();
-		String savePath = "C:/Users/Maple/Desktop/images/";
+		String savePath = "../img/";
 		File savefile = new File(savePath + filename);	
 		file.transferTo(savefile);
 		return "잘받았습니다"; 
@@ -88,14 +97,22 @@ public class MainController {
 	@ResponseBody
 	public String chatbot(String message) {
 		String event =null;
-		for(int i =  0; i<10;i++)
-		System.out.println(serviceDao.getAllRestautant().get(i));
 		if(message == "") {
 			event ="open";
 		}else {
 			event ="send";
 		}
 		return service.test(message,event);
+	}
+	
+	@RequestMapping("/chabot_list")
+	@ResponseBody
+	public List<RestaurantVO> chabot_list(String userId) {
+		int [] num = {0,10};
+		ArrayList<RestaurantVO> test = (ArrayList<RestaurantVO>)serviceDao.getdistance(num);
+		for(int i =  0; i<test.size();i++)
+			System.out.println(test.get(i));
+		return test;
 	}
 	
 	//허진호 end

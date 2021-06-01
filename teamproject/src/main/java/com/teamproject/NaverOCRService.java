@@ -23,7 +23,7 @@ public class NaverOCRService implements NaverService{
 		String apiURL = 
 		"https://e580247ae5a64e5bb7bccd286ecc2cb1.apigw.ntruss.com/custom/v1/8932/c636a03ee944009f3e166e16449c2e0ef30c8c8a84b6e9d6b59d18bba7b628d7/general";
 		String secretKey = "UUJlWExpSVdQY0dwbGx2eHFwZU16YnRMY2R5ZHhMeWM=";
-		String imageFile = "C:/Users/Maple/Desktop/images/"+inputimage;
+		String imageFile = "../img/"+inputimage;
 		
 		try {
 			URL url = new URL(apiURL);

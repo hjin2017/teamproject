@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository("dao")
 public interface RestaurantDAO {
 	public List<RestaurantVO> getAllRestautant();
+	public List<RestaurantVO> getdistance(int [] num);
 }

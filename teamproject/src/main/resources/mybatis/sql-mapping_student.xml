@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamproject.StudentDAO"> 
+
+<select id="getAllStudent" resultType="StudentVO">
+select * from student
+</select>
+
+<update id="updateImg" parameterType="StudentVO">
+update student
+set img=#{img} 
+where name =#{name}
+</update>
+
+
+ 
+</mapper>
+
+
+
+

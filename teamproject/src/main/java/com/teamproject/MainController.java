@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,55 @@ public class MainController {
 	
 	//김세미
 	
-	//작업 공간
+	  @Autowired StudentDAO stddao;
+	  @Autowired AttendDAO attdao;
+	  
+	  //student test
+	  @RequestMapping("/studentlist") 
+	  @ResponseBody public List<StudentVO> student_list() { 
+		  List<StudentVO> test = (List<StudentVO>)stddao.getAllStudent();
+		  for(int i = 0; i<test.size();i++) {
+			  System.out.println(test.get(i) +"\n");
+		  }
+		  return test; 
+	  }
+		 
+	 
+	  //attend test
+	  @RequestMapping("/test2")
+	  @ResponseBody public List<AttendVO> selectTodayAttend(String name) {//변수줘야함
+		  List<AttendVO> test2 = (List<AttendVO>)attdao.confirmTodayAttend(name);
+		  System.out.println(test2); 
+		  System.out.println(test2.getClass().getName());
+		  return test2; 
+	  }
+		 
+	
+		//attend test2
+	  @RequestMapping(value="/test3", method=RequestMethod.GET) 
+	  public ModelAndView test3(String name) { 
+		  ModelAndView mv = new ModelAndView(); 
+		  AttendVO todayAttend = attdao.confirmTodayAttend(name); //[AttendVO [id=null, attdate=null, status=0]]
+		  mv.addObject("todayAttend",todayAttend);
+		  System.out.println(todayAttend.getClass().getName());
+		  mv.setViewName("/ksm/test"); 
+		  return mv; 
+	  }
+		 
+	//img src넣어지는지 확인 
+	@RequestMapping(value="/chkUpdate")
+	@ResponseBody
+	public void test(StudentVO student) {
+		System.out.println(student.getName());
+		System.out.println(student.getImg());
+		stddao.updateImg(student);
+		
+	}
+	
 	
 	//김세미 end
+	
+	
 	//이현용
 	@Autowired
 	NaverOCRService ocrservice;

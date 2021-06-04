@@ -46,7 +46,7 @@ function enterkey(){
 	<div id = "messageWindow" style="background-color: #abcdef; width: 400px;height: 625px; overflow:scroll; overflow-x:hidden">
 	</div>
 	<div>이미지 + /</div>
-	<input type=text id="inputMessage" style="width:392px; height: 30px;"  onkeyup="enterkey()" > 
+	<input type=text id="inputMessage" style="width:392px; height: 30px;float: left;"  onkeyup="enterkey()" > 
 </div>
 </body>
 </html>

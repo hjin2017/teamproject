@@ -63,7 +63,7 @@ left:0;top:0;
 	 		<%@include file="home.jsp" %>
 	 	</div>
 		<div id="main_body_block" style="background-color: yellow;"> 
-	 		<%@include file="ksm/sm.jsp" %>
+	 		<%@include file="ksm/ksm_main.jsp" %>
 	 	</div>
 	 	<div id="main_body_block" style="background-color: blue;"> 
 	 		<%@include file="lhy/hy.jsp" %>

@@ -157,8 +157,9 @@ public class MainController {
 	public List<RestaurantVO> chabot_list(String userId) {
 		int [] num = {0,10};
 		ArrayList<RestaurantVO> test = (ArrayList<RestaurantVO>)serviceDao.getdistance(num);
-		for(int i =  0; i<test.size();i++)
-			System.out.println(test.get(i));
+		/*
+		 * for(int i = 0; i<test.size();i++) System.out.println(test.get(i));
+		 */
 		return test;
 	}
 	

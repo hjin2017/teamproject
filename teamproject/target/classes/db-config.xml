@@ -21,5 +21,3 @@
 		<mapper resource = "mybatis/sql-mapping_attend.xml"/>
 	</mappers> 
 </configuration>
-
-

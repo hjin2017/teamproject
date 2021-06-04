@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -87,10 +88,9 @@
                 });
             });
         };
-
+     
         function main() {
             // Create a camera object.
-            //여기서 비디오 처음부터 보일 수 있도록 설정 변경할 곳
             var output = document.getElementById('output');
             var camera = document.createElement("video");
             camera.setAttribute("width", output.width);
@@ -118,35 +118,50 @@
                 if (rects.length > 0) {
                    	var face = frameBGR.roi(rects[0]);
 
-                    var name = prompt('Say your name:'); 
-                    var cell = document.getElementById("targetNames").insertCell(0); //table에 저장
-                    cell.innerHTML = name;
+                    var stdname = prompt('이름을 입력하세요:'); //name
+                    var cell = document.getElementById("targetNames").insertCell(0); //table에 동적 추가
+                    cell.innerHTML = stdname;
 
-                    persons[name] = face2vec(face).clone(); //객체 복사
+                    persons[stdname] = face2vec(face).clone(); //객체 복사
                     
   			        var canvas = document.createElement("canvas");
                     canvas.setAttribute("width", 96);
                     canvas.setAttribute("height", 96);
-                    var cell = document.getElementById("targetImgs").insertCell(0); //table에 저장
+                    var cell = document.getElementById("targetImgs").insertCell(0); //table에 동적추가
                     cell.appendChild(canvas);
                     
-                    //
-                    /* for(var i=0; i<10; i++){
-               			var saveface = frameBGR.roi(rects[i]);
-                    } */
-                    //console.log(typeof(document.getElementById("targetNames"))); //obj
-                    
-                    //
-                    
+                                    
                     var faceResized = new cv.Mat(canvas.height, canvas.width, cv.CV_8UC3);
                     cv.resize(face, faceResized, { width: canvas.width, height: canvas.height });
                     cv.cvtColor(faceResized, faceResized, cv.COLOR_BGR2RGB);
                     cv.imshow(canvas, faceResized);
-                    faceResized.delete();
+                   	//
+                    var src = canvas.toDataURL(); //base64로 변환
+               
+                    console.log("stdname :" + stdname +" src: "+src);
+                   	//이름이랑 img경로 controller로 보내기
+                   	var formData = new FormData();
+                	formData.append("name", stdname);
+                	formData.append("img", src);
+                    	$.ajax({
+                   		url:'/chkUpdate',	//jsp주소
+                   		type:'POST',
+                   		data:formData,
+     	           	    processData: false,    // 반드시 작성
+ 	                    contentType: false,    // 반드시 작성
+ 	                   success:function(){
+ 	                    	alert("데이터 전송 성공");
+                   		},
+                   		error:function(jqXHR, textStatus, errorThrown){
+                   			alert("데이터 전송 실패: " + textStatus+": " + errorThrown);
+                   		}
+                   	}); 
+                   	 faceResized.delete();
                 }
             };
             //! [Add a person]
-
+				
+          
             //! [Define frames processing]
             var isRunning = false;
             const FPS = 30;  //초당 처리되는 프레임 수
@@ -154,44 +169,40 @@
                 var begin = Date.now();
                 cap.read(frame);  // 프레임 읽기
                 cv.cvtColor(frame, frameBGR, cv.COLOR_RGBA2BGR);
-		
-                //이미지에서 얼굴을 찾아내는 함수
+				//db에서 이미지 파일 가져와서 비교해야됨.
+                //이미지에서 얼굴을 찾아냄
                 var faces = detectFaces(frameBGR);
                 faces.forEach(function (rect) {
                     cv.rectangle(frame, { x: rect.x, y: rect.y }, { x: rect.x + rect.width, y: rect.y + rect.height }, [0, 255, 0, 255]);
 
                     var face = frameBGR.roi(rect); //관심영역(얼굴)
                     var name = recognize(face); //같은 사람인지 확인
+                    //window.location.replace("views/ksm/test.jsp?name=" + name);
                     cv.putText(frame, name, { x: rect.x, y: rect.y }, cv.FONT_HERSHEY_SIMPLEX, 1.0, [0, 255, 0, 255]);  //같은 사람이면 글씨 쓰기
-                    if(name != "unknown"){//unknown이 아니고 &
-                    	//for(var i=0; i<10; i++){
-                    		//console.log("nametype"+ typeof(name));
-                    		//console.log(typeof((document.getElementById("targetNames")).toString()));
-                    		var getName = document.getElementById("targetNames"); //
-                    		var test = document.getElementsByTagName("td"); 
-                    		for(var i =0; i<3; i++){
-                    			console.log(test[i]);
-                    		}
-                    		console.log(test); //HTMLCollection
-                    		console.log(typeof(getName));//object
-                    		console.log("tostring " +getName.toString());	//[object HTMLTableRowElement]
-                    		console.log("json "+ JSON.stringify(getName));
-                    		//getName.value
-                    		//console.log(getName);
-                    		//console.log (name == getName);
-                    		/* if(name == document.getElementById("targetNames")){
-                        		alert(name + "님 출석 완료되었습니다.\n") //출석 완료 글자 출력 
-                        	}//이름을 찾았을때 */
-                    	//}
-                    	
-                    	
-                    	alert(name + "님 출석 완료되었습니다.\n") //출석 완료 글자 출력 
-               			isRunning = false;	//계속 alert창 나오니까 임시수정
-                    	//-> 데이터 베이스 출석 상태 update해야됨
-                    	
-                     }
-                    //db생성후에 for(var i=0; i<person[]; i++) if(name == person[name]){alert}  
-               
+                   
+                    //
+                    
+                   while(name != "unknown"){
+                		<%-- <%
+                		String name = request.getParameter("name");
+                		String status = (String)request.getAttribute("todayAttend");
+                		System.out.println("name:" + name);
+                		%> --%>
+                		
+         	      		//if(${todayAttend.status}){
+          
+                			//출석 상태가 아닐경우
+                			alert(name + "님 출석체크 완료되었습니다.");
+                			//학생 db에서 status-1로 변경 
+                		//}
+                	  	//else{//출석 상태일 경우
+                	  		//alert("이미 출석 처리 되었습니다.\n");
+                	  	//}
+                	   isRunning=false;
+                   	   break;
+                    	 
+                   }
+               		//             
                 });
 
                 cv.imshow(output, frame);
@@ -236,14 +247,15 @@
 <body onload="cv['onRuntimeInitialized']=()=>{ main() }">
     <button id="startStopButton" type="button" disabled="true">Start</button>
     <div id="status"></div>
-    <canvas id="output" width=640 height=480 style="max-width: 100%"></canvas>
+    <canvas id="output" width=640 height=480 style="max-width: 100%" ></canvas>
 
-    <table> <!--테이블 고대로 db에 저장 -->
+    <table> 
         <tr id="targetImgs"></tr>
         <tr id="targetNames"></tr>
     </table>
-    <button id="addPersonButton" type="button" disabled="true">Add a person</button>
-    
+    <button id="addPersonButton" type="button" disabled="새로 추가">first</button>
+  
+   
 </body>
 
 </html>

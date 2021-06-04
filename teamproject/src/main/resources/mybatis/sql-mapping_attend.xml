@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.teamproject.AttendDAO"> 
+
+<select id="getAllList" resultType="AttendVO">
+select * from attend
+</select>
+
+<select id = "confirmTodayAttend" resultType="AttendVO">
+select status from attend
+where to_char(attdate, 'YYYYMMDD') = to_char(sysdate, 'YYYYMMDD')
+	and id=(select id from student where name = #{name})
+</select>
+
+<update id="updateAttend" parameterType="AttendVO">
+update attend
+set status=#{status} 
+where to_char(attdate, 'YYYYMMDD') = to_char(sysdate, 'YYYYMMDD')
+	and id = (select id from student where name = #{name})
+</update>
+</mapper>
+
+
+
+
+

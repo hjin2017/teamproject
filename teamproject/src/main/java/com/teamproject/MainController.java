@@ -6,11 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
-=======
 
 import javax.imageio.ImageIO;
->>>>>>> branch 'main' of https://github.com/hjin2017/teamproject.git
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -9,6 +9,7 @@
     <script async src="js/opencv.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
 
+    <script src = "js/reimg.js" type='text/javascript'></script>
     <script type='text/javascript'>
         var netDet = undefined, netRecogn = undefined;
         var persons = {};
@@ -117,28 +118,44 @@
                 
                 if (rects.length > 0) {
                    	var face = frameBGR.roi(rects[0]);
+                   	console.log(frameBGR);
+                   	console.log(rects[0]);
+                   	console.log(rects);
 
                     var stdname = prompt('이름을 입력하세요:'); //name
                     var cell = document.getElementById("targetNames").insertCell(0); //table에 동적 추가
                     cell.innerHTML = stdname;
 
                     persons[stdname] = face2vec(face).clone(); //객체 복사
+                    console.log(persons[stdname]);
                     
   			        var canvas = document.createElement("canvas");
                     canvas.setAttribute("width", 96);
                     canvas.setAttribute("height", 96);
+                    ////////////////////////////////////////
+   /*                  var samplecontext = canvas.getContext("2d");
+					var sampleImage = new Image();
+					sampleImage.src = "/images/semi.png";
+					sampleImage.onload = function(){
+						samplecontext.drawImage(sampleImage, 0, 0, sampleImage.width, sampleImage.height);
+					} */
+                    ///////////////////////////////////
+                    
                     var cell = document.getElementById("targetImgs").insertCell(0); //table에 동적추가
                     cell.appendChild(canvas);
+                    console.log(canvas);
                     
-                                    
+                    //var img = cv.imread(document.getElementById('test'));
+                    
                     var faceResized = new cv.Mat(canvas.height, canvas.width, cv.CV_8UC3);
                     cv.resize(face, faceResized, { width: canvas.width, height: canvas.height });
                     cv.cvtColor(faceResized, faceResized, cv.COLOR_BGR2RGB);
+                    //cv.cvtColor(img, faceResized, cv.COLOR_BGR2RGB);
                     cv.imshow(canvas, faceResized);
                    	//
                     var src = canvas.toDataURL(); //base64로 변환
                
-                    console.log("stdname :" + stdname +" src: "+src);
+                    //console.log("stdname :" + stdname )
                    	//이름이랑 img경로 controller로 보내기
                    	var formData = new FormData();
                 	formData.append("name", stdname);
@@ -155,7 +172,10 @@
                    		error:function(jqXHR, textStatus, errorThrown){
                    			alert("데이터 전송 실패: " + textStatus+": " + errorThrown);
                    		}
-                   	}); 
+                   	});  
+                   	
+                   	
+                   	
                    	 faceResized.delete();
                 }
             };
@@ -177,7 +197,6 @@
 
                     var face = frameBGR.roi(rect); //관심영역(얼굴)
                     var name = recognize(face); //같은 사람인지 확인
-                    //window.location.replace("views/ksm/test.jsp?name=" + name);
                     cv.putText(frame, name, { x: rect.x, y: rect.y }, cv.FONT_HERSHEY_SIMPLEX, 1.0, [0, 255, 0, 255]);  //같은 사람이면 글씨 쓰기
                    
                     //
@@ -248,7 +267,7 @@
     <button id="startStopButton" type="button" disabled="true">Start</button>
     <div id="status"></div>
     <canvas id="output" width=640 height=480 style="max-width: 100%" ></canvas>
-
+	<!-- <img id="test" src ="/images/semi.png"> -->
     <table> 
         <tr id="targetImgs"></tr>
         <tr id="targetNames"></tr>

@@ -1,9 +1,16 @@
 package com.teamproject;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
+=======
+
+import javax.imageio.ImageIO;
+>>>>>>> branch 'main' of https://github.com/hjin2017/teamproject.git
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.xml.bind.DatatypeConverter;
 @Controller
 public class MainController {
 
@@ -62,9 +71,32 @@ public class MainController {
 	@RequestMapping(value="/chkUpdate")
 	@ResponseBody
 	public void test(StudentVO student) {
-		System.out.println(student.getName());
-		System.out.println(student.getImg());
-		stddao.updateImg(student);
+		  File file = new File("../image"); 
+		  String[] files = file.list();
+		  
+		  System.out.println("Listing contents of " + file.getPath()); 
+		  for(int i=0 ; i< files.length ; i++) 
+		  { System.out.println(files[i]); }
+
+		//System.out.println(student);
+		String data = student.getImg().split(",")[1];
+		//System.out.println(data);
+		byte[] imageBytes = DatatypeConverter.parseBase64Binary(data);
+		
+		try {
+			BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(imageBytes));
+			ImageIO.write(bufImg, "png", new File("../image/"+student.getName()+".png"));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			System.out.println("실패");
+		}
+		
+		System.out.println("성공");
+		
+		//stddao.updateImg(student);
 		
 	}
 	

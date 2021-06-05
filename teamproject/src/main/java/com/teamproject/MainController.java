@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,12 +83,12 @@ public class MainController {
 	public ModelAndView ocrinput() {
 		File f = new File("../img"); 
 		/*
-		 * 
 		 * File file = new File("../"); String[] files = file.list();
 		 * 
-		 * System.out.println("Listing contents of " + file.getPath()); for(int i=0 ; i
-		 * < files.length ; i++) { System.out.println(files[i]); }
+		 * System.out.println("Listing contents of " + file.getPath()); for(int i=0 ; i<
+		 * files.length ; i++) { System.out.println(files[i]); }
 		 */
+		 
 		String[] filelist = f.list();
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("filelist",filelist);
@@ -139,6 +138,8 @@ public class MainController {
 	
 	@Autowired
 	RestaurantDAO serviceDao;
+	@Autowired
+	MemberDAO serviceMemberDao;
 	
 	@RequestMapping("/chabot")
 	@ResponseBody
@@ -161,6 +162,19 @@ public class MainController {
 		 * for(int i = 0; i<test.size();i++) System.out.println(test.get(i));
 		 */
 		return test;
+	}
+	
+	@RequestMapping("/sing_up")
+	public String sing_up() {
+		return "/hjh/sing_up";
+	}
+	
+	@RequestMapping("/hjh_join")
+	@ResponseBody
+	public String hjh_join(String id, String addr,String name,int phon,String pass) {
+		MemberVO vo = new MemberVO(0,phon, 0, id,name,addr,pass,"");
+		System.out.println(vo);
+		 return "{\"process\":\"정상적으로 저장되었습니다.\"}"; 
 	}
 	
 	//허진호 end

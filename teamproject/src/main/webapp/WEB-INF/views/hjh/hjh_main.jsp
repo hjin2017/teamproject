@@ -16,7 +16,7 @@ $(document).ready(function(){
 <body>
 <div id="hjh_main" style="background-color: gray;">
 	<div  style="background-color: yellow; width: 820px;height: 700px;margin: 0px auto;">
-		<div id = 'hjh_main_show'>
+		<div id = 'hjh_main_show' >
 			<%@include file="hjh_home.jsp" %>
 		</div>	
 		<div id = 'hjh_user_show' style="display: none;">

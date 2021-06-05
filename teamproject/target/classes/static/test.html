@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src ="jquery-3.2.1.min.js"></script>
+</head>
+<script>
+$(document).ready(function(){
+	function ajaxfunction(data,url,fun) {
+		var test =	{
+				url:'',
+				type: 'post' , 
+				dataType: 'json' ,
+				data:'',
+				success: function(e){fun(e);},
+				error:function(request,status,error){
+					 console.log("code:"+request.status+"\n"+"error:"+error);
+				}
+		}
+		test.url = url;
+		test.data = data;	
+		$.ajax(test);
+		}
+});
+function s(e){alert(e.process);}
+var data = {'s':10};
+ajaxfunction(data,'/menu',s);
+</script>
+<body>
+<h1>sssssssssssssss</h1>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamproject.MemberDAO">
+
+<insert id="insertMember" parameterType="MemberVO">
+insert into member values((select to_number(to_char(SYSTIMESTAMP,'yyyymmddhh24miss'))from DUAL),
+    #{id}, #{name}, #{addr}, #{phon}, #{pass}, #{likeable}, #{weight})
+</insert>
+
+</mapper>
+
+
+
+

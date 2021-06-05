@@ -12,6 +12,7 @@
 		<typeAlias type="com.teamproject.RestaurantVO" alias="RestaurantVO"/>
 		<typeAlias type="com.teamproject.StudentVO" alias="StudentVO"/>
 		<typeAlias type="com.teamproject.AttendVO" alias = "AttendVO"/>
+		<typeAlias type="com.teamproject.MemberVO" alias = "MemberVO"/>
 	</typeAliases> 
 	
 	<!-- 3. sql mapping 파일 설정 -->
@@ -19,5 +20,6 @@
 		<mapper resource = "mybatis/sql-mapping.xml"/>
 		<mapper resource = "mybatis/sql-mapping_student.xml"/>
 		<mapper resource = "mybatis/sql-mapping_attend.xml"/>
+		<mapper resource = "mybatis/sql-mapping_member.xml"/>
 	</mappers> 
 </configuration>

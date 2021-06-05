@@ -43,7 +43,6 @@ where r between
 #{num}
 </foreach>
 </select>
-
 <!-- 허진호 end-->  
 </mapper>
 

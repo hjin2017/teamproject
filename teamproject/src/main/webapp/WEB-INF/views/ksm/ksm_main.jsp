@@ -16,7 +16,7 @@ $(document).ready(function(){
 <%@include file="sm.jsp" %>
 <%@include file="ksm_login.jsp" %>
 <%@include file="ksm_attendance.jsp" %>
-<%@include file="ksm_attendanceboard.jsp" %>
+<%-- <%@include file="ksm_attendanceboard.jsp" %>  --%>
 </div>
 </body>
 </html>

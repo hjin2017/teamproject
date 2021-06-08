@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,29 +33,32 @@ public class MainController {
 	  @Autowired StudentDAO stddao;
 	  @Autowired AttendDAO attdao;
 	  
-	  //student test
-	  @RequestMapping("/studentlist") 
-	  @ResponseBody public List<StudentVO> student_list() { 
-		  List<StudentVO> test = (List<StudentVO>)stddao.getAllStudent();
-		  for(int i = 0; i<test.size();i++) {
-			  System.out.println(test.get(i) +"\n");
-		  }
-		  return test; 
-	  }
+		/*
+		 * //student test
+		 * 
+		 * @RequestMapping("/studentlist")
+		 * 
+		 * @ResponseBody public List<StudentVO> student_list() { List<StudentVO> test =
+		 * (List<StudentVO>)stddao.getAllStudent(); for(int i = 0; i<test.size();i++) {
+		 * System.out.println(test.get(i) +"\n"); } return test; }
+		 */
 		 
 	 
-	  //attend test
-	  @RequestMapping("/test2")
-	  @ResponseBody public List<AttendVO> selectTodayAttend(String name) {//변수줘야함
-		  List<AttendVO> test2 = (List<AttendVO>)attdao.confirmTodayAttend(name);
-		  System.out.println(test2); 
-		  System.out.println(test2.getClass().getName());
-		  return test2; 
-	  }
+		/*
+		 * //attend test
+		 * 
+		 * @RequestMapping("/test2")
+		 * 
+		 * @ResponseBody public List<AttendVO> selectTodayAttend(String name) {//변수줘야함
+		 * List<AttendVO> test2 = (List<AttendVO>)attdao.confirmTodayAttend(name);
+		 * System.out.println(test2); System.out.println(test2.getClass().getName());
+		 * return test2; }
+		 */
 		 
 	
 		//attend test2
-	  @RequestMapping(value="/test3", method=RequestMethod.GET) 
+	  @RequestMapping(value="/test3", method=RequestMethod.GET)
+	  @ResponseBody
 	  public ModelAndView test3(String name) { 
 		  ModelAndView mv = new ModelAndView(); 
 		  AttendVO todayAttend = attdao.confirmTodayAttend(name); //[AttendVO [id=null, attdate=null, status=0]]
@@ -63,6 +67,19 @@ public class MainController {
 		  mv.setViewName("/ksm/test"); 
 		  return mv; 
 	  }
+		
+		  //attend list test----------------------------
+		  //post로 변경(login후 id변수로 보내기)해야함.
+	  @RequestMapping(value="/attendList", method=RequestMethod.GET) 
+	  @ResponseBody
+	  public ModelAndView attendList(String id){
+		  ModelAndView mv = new ModelAndView(); 
+		  List<AttendVO> list = attdao.getAttendList(id);
+		  mv.addObject("list", list);
+		  mv.setViewName("/ksm/ksm_attendanceboard"); 
+		  return mv; 
+	  }
+		 
 		 
 	//img src넣어지는지 확인 
 	@RequestMapping(value="/chkUpdate")

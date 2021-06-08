@@ -21,6 +21,12 @@ set status=#{status}
 where to_char(attdate, 'YYYYMMDD') = to_char(sysdate, 'YYYYMMDD')
 	and id = (select id from student where name = #{name})
 </update>
+
+<select id="getAttendList" resultType="AttendVO">
+select *
+from attend
+where id=#{id}
+</select>
 </mapper>
 
 

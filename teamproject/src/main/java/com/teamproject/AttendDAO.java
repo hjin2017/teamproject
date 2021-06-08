@@ -12,4 +12,5 @@ public interface AttendDAO {
 	public List<AttendVO> getAllList();
 	public AttendVO confirmTodayAttend(String name);
 	public void updateAttend(AttendVO vo);
+	public List<AttendVO> getAttendList(String id);
 }

@@ -9,7 +9,7 @@
     <script async src="js/opencv.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
 
-    <script src = "js/reimg.js" type='text/javascript'></script>
+    
     <script type='text/javascript'>
         var netDet = undefined, netRecogn = undefined;
         var persons = {};
@@ -202,21 +202,16 @@
                     //
                     
                    while(name != "unknown"){
-                		<%-- <%
-                		String name = request.getParameter("name");
-                		String status = (String)request.getAttribute("todayAttend");
-                		System.out.println("name:" + name);
-                		%> --%>
-                		
-         	      		//if(${todayAttend.status}){
-          
+                	   //var status = '<c:out value="${todayAttend.status}"/>';
+                		//console.log("status:" +status);
+         	      		//if(status==0){
                 			//출석 상태가 아닐경우
                 			alert(name + "님 출석체크 완료되었습니다.");
                 			//학생 db에서 status-1로 변경 
                 		//}
-                	  	//else{//출석 상태일 경우
+                	  	//else if(status==1){//출석 상태일 경우
                 	  		//alert("이미 출석 처리 되었습니다.\n");
-                	  	//}
+                	  	//} 
                 	   isRunning=false;
                    	   break;
                     	 

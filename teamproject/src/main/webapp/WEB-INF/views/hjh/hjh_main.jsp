@@ -19,7 +19,7 @@ $(document).ready(function(){
 		<div id = 'hjh_main_show' >
 			<%@include file="hjh_home.jsp" %>
 		</div>	
-		<div id = 'hjh_user_show' style="display: none;">
+		<div id = 'hjh_user_show'style="display: none;">
 			<%@include file="hjh_chatbot.jsp" %>
 			<%@include file="hjh_list.jsp" %>	
 		</div>	

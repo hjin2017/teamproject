@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -203,10 +202,33 @@ public class MainController {
 	@ResponseBody
 	public String hjh_join(String id, String addr,String name,int phon,String pass) {
 		MemberVO vo = new MemberVO(0,phon, 0, id,name,addr,pass,"");
-		System.out.println(vo);
-		 return "{\"process\":\"정상적으로 저장되었습니다.\"}"; 
+		MemberVO idvo = serviceMemberDao.getId(id);
+		String eM = "";
+		//주소 좌표 전환 메소드를 추가해야함
+		if(idvo !=null) {
+			eM = "\"id가 중복 되었습니다.\"";
+			return "{\"process\":"+eM+"}"; 
+		}
+		eM = "\"성공\"";
+		serviceMemberDao.insertMember(vo);
+		 return "{\"process\":"+eM+"}"; 
 	}
 	
+	@RequestMapping("/hjh_login")
+	@ResponseBody
+	public String hjh_login(String id,String pass) {
+		MemberVO vo = new MemberVO(0,0, 0, id,"","",pass,"");
+		MemberVO idvo = serviceMemberDao.getIdandPass(vo);
+		System.out.println(vo);
+		String eM = "";
+		//주소 좌표 전환 메소드를 추가해야함
+		if(idvo ==null) {
+			eM = "\"id와 비밀번호가 일치하지 않습니다\"";
+			return "{\"process\":"+eM+"}"; 
+		}
+		eM = "\"성공\"";
+		 return "{\"process\":"+eM+"}"; 
+	}	
 	//허진호 end
 	
 }

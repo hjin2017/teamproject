@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository("meberdao")
 public interface MemberDAO {
 	void insertMember(MemberVO vo);
+	MemberVO getId(String id);
+	MemberVO getIdandPass(MemberVO vo);
 }

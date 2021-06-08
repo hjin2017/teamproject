@@ -1,12 +1,13 @@
 package com.teamproject;
 
 public class MemberVO {
-int h_id,phon,weight;
+int phon,weight;
+long h_id;
 String id,name,addr,pass,likeable;
-public int getH_id() {
+public long getH_id() {
 	return h_id;
 }
-public void setH_id(int h_id) {
+public void setH_id(long h_id) {
 	this.h_id = h_id;
 }
 public int getPhon() {
@@ -51,7 +52,7 @@ public String getLikeable() {
 public void setLikeable(String likeable) {
 	this.likeable = likeable;
 }
-public MemberVO(int h_id, int phon, int weight, String id, String name, String addr, String pass, String likeable) {
+public MemberVO(long h_id, int phon, int weight, String id, String name, String addr, String pass, String likeable) {
 	super();
 	this.h_id = h_id;
 	this.phon = phon;

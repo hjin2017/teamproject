@@ -4,6 +4,7 @@ public class MemberVO {
 int phon,weight;
 long h_id;
 String id,name,addr,pass,likeable;
+
 public long getH_id() {
 	return h_id;
 }

@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer{
 		.addResourceLocations("file:///D:/kdigital/workspace_spring/teamproject/teamproject/img/");
 		
 		registry.addResourceHandler("/images/**")
-		.addResourceLocations("file:///C:/kdigital/worksapce_spring/teamproject/image/");
+		.addResourceLocations("file:///C:/kdigital/worksapce_spring/teamproject/img/");
 	}
 }
 

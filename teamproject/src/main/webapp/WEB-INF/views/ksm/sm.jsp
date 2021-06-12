@@ -2,14 +2,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPEhtml>
 <html>
 
 <head>
     <script async src="js/opencv.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
 
-    <script src = "js/reimg.js" type='text/javascript'></script>
+   
     <script type='text/javascript'>
         var netDet = undefined, netRecogn = undefined;
         var persons = {};
@@ -45,7 +45,7 @@
         function face2vec(face) {
             var blob = cv.blobFromImage(face, 1.0 / 255, { width: 96, height: 96 }, [0, 0, 0, 0], true, false)
             netRecogn.setInput(blob);
-            var vec = netRecogn.forward();
+            var vec = netRecogn.forward(); //확률값
             blob.delete();
             return vec;
         };//! [Get 128 floating points feature vector]
@@ -126,7 +126,14 @@
                     var cell = document.getElementById("targetNames").insertCell(0); //table에 동적 추가
                     cell.innerHTML = stdname;
 
+                    //var imge  = new Image();
+                    
+                    
+                    //imge.src = 'C:/kdigital/worksapce_spring/teamproject/img';
+                    //var img = cv.imread(document.getElementById('test'));
+                    var frame = new cv.Mat(camera.height, camera.width, cv.CV_8UC4);
                     persons[stdname] = face2vec(face).clone(); //객체 복사
+                    //persons[stdname] = face2vec(imge).clone(); //객체 복사
                     console.log(persons[stdname]);
                     
   			        var canvas = document.createElement("canvas");
@@ -144,8 +151,8 @@
                     var cell = document.getElementById("targetImgs").insertCell(0); //table에 동적추가
                     cell.appendChild(canvas);
                     console.log(canvas);
+       
                     
-                    //var img = cv.imread(document.getElementById('test'));
                     
                     var faceResized = new cv.Mat(canvas.height, canvas.width, cv.CV_8UC3);
                     cv.resize(face, faceResized, { width: canvas.width, height: canvas.height });
@@ -267,7 +274,7 @@
     <button id="startStopButton" type="button" disabled="true">Start</button>
     <div id="status"></div>
     <canvas id="output" width=640 height=480 style="max-width: 100%" ></canvas>
-	<!-- <img id="test" src ="/images/semi.png"> -->
+	<img id="test" src ="/images/semi.png">
     <table> 
         <tr id="targetImgs"></tr>
         <tr id="targetNames"></tr>

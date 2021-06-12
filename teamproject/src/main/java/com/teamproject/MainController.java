@@ -1,4 +1,4 @@
-package com.teamproject;
+ package com.teamproject;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -68,7 +68,7 @@ public class MainController {
 	@RequestMapping(value="/chkUpdate")
 	@ResponseBody
 	public void test(StudentVO student) {
-		  File file = new File("../image"); 
+		  File file = new File("../img/"); 
 		  String[] files = file.list();
 		  
 		  System.out.println("Listing contents of " + file.getPath()); 
@@ -82,7 +82,7 @@ public class MainController {
 		
 		try {
 			BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(imageBytes));
-			ImageIO.write(bufImg, "png", new File("../image/"+student.getName()+".png"));
+			ImageIO.write(bufImg, "png", new File("../img/"+student.getName()+".png"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -169,6 +169,7 @@ public class MainController {
 	RestaurantDAO serviceDao;
 	@Autowired
 	MemberDAO serviceMemberDao;
+
 	
 	@RequestMapping("/chabot")
 	@ResponseBody
@@ -193,9 +194,28 @@ public class MainController {
 		return test;
 	}
 	
-	@RequestMapping("/sing_up")
+	@RequestMapping("/chatbot2")
+	@ResponseBody
+	public String chatbot2(String message) {
+		String event =null;
+		if(message == "") {
+			event ="open";
+		}else {
+			event ="send";
+		}
+		return service.test(message,event);
+	}
+	
+	@RequestMapping(value = "/chabot_list2", method=RequestMethod.POST)
+	@ResponseBody
+	public void chatbot_list2(String id, String list) {
+		System.out.println(id + ":" + list);
+		
+	}
+	
+	@RequestMapping("/sign_up")
 	public String sing_up() {
-		return "/hjh/sing_up";
+		return "/hjh/sign_up";
 	}
 	
 	@RequestMapping("/hjh_join")
@@ -219,7 +239,7 @@ public class MainController {
 	public String hjh_login(String id,String pass) {
 		MemberVO vo = new MemberVO(0,0, 0, id,"","",pass,"");
 		MemberVO idvo = serviceMemberDao.getIdandPass(vo);
-		System.out.println(vo);
+		//System.out.println(vo);
 		String eM = "";
 		//주소 좌표 전환 메소드를 추가해야함
 		if(idvo ==null) {

@@ -56,6 +56,7 @@
 
             var bestMatchName = 'unknown';
             var bestMatchScore = 0.5;  // Actually, the minimum is -1 but we use it as a threshold.
+            //var img = cv.imread(document.getElementById('test'));
             for (name in persons) {
                 var personVec = persons[name];
                 var score = vec.dot(personVec);
@@ -111,24 +112,28 @@
             var frame = new cv.Mat(camera.height, camera.width, cv.CV_8UC4);
             var frameBGR = new cv.Mat(camera.height, camera.width, cv.CV_8UC3);
             //! [Open a camera stream]
-
+             //var src = frameBGR.toDataURL(); //base64로 변환
+            // console.log(frameBGR);
+			//frameBGR
             //사람 추가 버튼 클릭했을 때 이름+사진 가져와서 그려줌
             document.getElementById('addPersonButton').onclick = function () {
                 var rects = detectFaces(frameBGR);
                 
                 if (rects.length > 0) {
                    	var face = frameBGR.roi(rects[0]);
-                   	console.log(frameBGR);
-                   	console.log(rects[0]);
-                   	console.log(rects);
-
-                    var stdname = prompt('이름을 입력하세요:'); //name
+                    console.log(face);
+                    var stdname ='h'; //prompt('이름을 입력하세요:'); //name
                     var cell = document.getElementById("targetNames").insertCell(0); //table에 동적 추가
                     cell.innerHTML = stdname;
-
-                    persons[stdname] = face2vec(face).clone(); //객체 복사
-                    console.log(persons[stdname]);
                     
+                    let canva = document.getElementById ('test');
+                    let ctx = canva.getContext("2d");
+                    let imgData = ctx.getImageData (0, 0, canva.width, canva.height);
+                    
+                    var img = cv.imread();
+                    
+                    persons[stdname] = face2vec(face).clone(); //객체 복사
+
   			        var canvas = document.createElement("canvas");
                     canvas.setAttribute("width", 96);
                     canvas.setAttribute("height", 96);
@@ -153,7 +158,7 @@
                     //cv.cvtColor(img, faceResized, cv.COLOR_BGR2RGB);
                     cv.imshow(canvas, faceResized);
                    	//
-                    var src = canvas.toDataURL(); //base64로 변환
+                    //var src = canvas.toDataURL(); //base64로 변환
                
                     //console.log("stdname :" + stdname )
                    	//이름이랑 img경로 controller로 보내기
@@ -267,7 +272,7 @@
     <button id="startStopButton" type="button" disabled="true">Start</button>
     <div id="status"></div>
     <canvas id="output" width=640 height=480 style="max-width: 100%" ></canvas>
-	<!-- <img id="test" src ="/images/semi.png"> -->
+	 <img id="test" src ="/images/h.png"> 
     <table> 
         <tr id="targetImgs"></tr>
         <tr id="targetNames"></tr>

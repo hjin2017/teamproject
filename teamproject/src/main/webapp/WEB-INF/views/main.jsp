@@ -66,7 +66,7 @@ left:0;top:0;
 	 		<%@include file="ksm/ksm_main.jsp" %>
 	 	</div>
 	 	<div id="main_body_block" style="background-color: blue;"> 
-	 		<%@include file="lhy/hy.jsp" %>
+	
 	 	</div>
 	 	<div id="main_body_block" style="background-color: purple;"> 
 	 		<%@include file="hjh/hjh_main.jsp" %>

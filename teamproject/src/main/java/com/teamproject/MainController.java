@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -68,7 +69,7 @@ public class MainController {
 	@RequestMapping(value="/chkUpdate")
 	@ResponseBody
 	public void test(StudentVO student) {
-		  File file = new File("../image"); 
+		  File file = new File("../img"); 
 		  String[] files = file.list();
 		  
 		  System.out.println("Listing contents of " + file.getPath()); 
@@ -81,8 +82,26 @@ public class MainController {
 		byte[] imageBytes = DatatypeConverter.parseBase64Binary(data);
 		
 		try {
-			BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(imageBytes));
-			ImageIO.write(bufImg, "png", new File("../image/"+student.getName()+".png"));
+			String path = "../img/"+student.getName();
+				File Folder = new File(path);
+			
+			if(!Folder.exists()) {
+				Folder.mkdir();
+			}
+			
+			if(Folder.list().length>=2) {
+				Random rand = new Random();
+				BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(imageBytes));
+				System.out.println(rand.nextInt(1));
+				ImageIO.write(bufImg, "png",new File(path +"/"+(rand.nextInt(1)+1)+".png"));
+			}
+			
+			if(Folder.list().length<2) {
+				BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(imageBytes));
+				ImageIO.write(bufImg, "png",new File(path +"/1.png"));
+				ImageIO.write(bufImg, "png",new File(path +"/2.png"));
+			}
+			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -97,7 +116,18 @@ public class MainController {
 		
 	}
 	
-	
+	@RequestMapping("/face_registration")
+	public String face_registration() {
+		return "/ksm/face_registration";
+	}
+
+	@RequestMapping(value="/labels")
+	@ResponseBody
+	String[] labels() {
+		  File file = new File("../img"); 
+		  String[] files = file.list();
+		  return files;
+	}
 	//김세미 end
 	
 	

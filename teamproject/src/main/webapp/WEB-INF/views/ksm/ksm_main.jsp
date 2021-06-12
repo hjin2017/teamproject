@@ -13,7 +13,8 @@ $(document).ready(function(){
 </head>
 <body>
 <div id="ksm_main" style="height: 700px; width: 100%;">
-<%@include file="sm.jsp" %>
+<a href='#ksm_main' onclick="window.open('face_registration', 'ss1s','width=800, height=700, scrollbars=no, resizable=no, toolbars=no, menubar=no')">회원 가입하기</a>
+<%-- <%@include file="sm.jsp" %> --%>
 <%-- <%@include file="ksm_login.jsp" %>
 <%@include file="ksm_login.jsp" %>
 >>>>>>> branch 'main' of https://github.com/hjin2017/teamproject.git

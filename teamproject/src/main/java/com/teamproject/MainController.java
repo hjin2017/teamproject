@@ -259,6 +259,13 @@ public class MainController {
 		eM = "\"성공\"";
 		 return "{\"process\":"+eM+"}"; 
 	}	
+	
+	@RequestMapping(value = "/chabot_list2", method=RequestMethod.POST)
+	@ResponseBody
+	public void chatbot_list2(String id, String list) {
+		System.out.println(id + ":" + list);
+		
+	}
 	//허진호 end
 	
 }

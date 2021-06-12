@@ -73,9 +73,6 @@ video.addEventListener('play',() => {
 
 		context.clearRect(0, 0, canvas.width, canvas.height)
 	}
-	input.onkeyup = function(){
-		
-	}
 
 	document.getElementById('body1').append(canvas)
 	const displaySize = { width: video.width, height: video.height }
@@ -85,10 +82,10 @@ video.addEventListener('play',() => {
 		
 	  const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors()
 	  const resizedDetections = faceapi.resizeResults(detections, displaySize)
-	  src = canvas.toDataURL();
 	  canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
 	  labeledFaceDescriptors = await loadLabeledImages(labels)
 	  const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors)
+	  
 	  const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
 	  results.forEach((result, i) => {
 		console.log('반 복')
